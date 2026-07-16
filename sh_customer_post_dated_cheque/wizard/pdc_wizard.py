@@ -138,6 +138,7 @@ class PDC_wizard(models.Model):
     due_date = fields.Date("Due Date", required=1, tracking=True)
     memo = fields.Char("Memo", tracking=True)
     agent = fields.Char("Agent", tracking=True)
+    pdc_holder = fields.Many2one('res.partner', 'PDC Holder' , tracking=True)
     bank_id = fields.Many2one('res.bank', string="Bank", tracking=True)
     attachment_ids = fields.Many2many('ir.attachment', string='Cheque Image')
     company_id = fields.Many2one(
@@ -399,8 +400,8 @@ class PDC_wizard(models.Model):
                                                                                   ('credit', '>', 0.0)], limit=1)
 
                     if debit_move_id and credit_move_id and payment_amount > 0:
-                        full_reconcile_id = self.env['account.full.reconcile'].sudo().create({
-                        })
+                        # full_reconcile_id = self.env['account.full.reconcile'].sudo().create({
+                        # })
 
                         if payment_amount > invoice.amount_residual:
                             amount = invoice.amount_residual

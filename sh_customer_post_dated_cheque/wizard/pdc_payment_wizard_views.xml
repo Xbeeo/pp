@@ -24,6 +24,7 @@
                             <field name="due_date" />
                             <field name="memo" />
                             <field name="agent" />
+                            <field name="pdc_holder" />
                             <field name="bank_id" />
                             <field name = "invoice_ids" readonly = "1" widget="many2many_tags"/>
                             <field name="attachment_ids" widget="many2many_binary" string="Attach Cheque Image" nolabel="1" colspan="2"/>
@@ -77,6 +78,7 @@
                             <field name="due_date" readonly="state not in ['draft','bounced','returned']" />
                             <field name="memo" readonly="state not in ['draft','bounced','returned']" />
                             <field name="agent" readonly="state not in ['draft','bounced','returned']" />
+                            <field name="pdc_holder" readonly="state not in ['draft','bounced','returned']" />
                             <field name="bank_id" readonly="state not in ['draft','bounced','returned']" />
                             <field name = "done_date"/>
                         </group>
