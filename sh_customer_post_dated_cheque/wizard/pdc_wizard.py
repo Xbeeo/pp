@@ -149,7 +149,7 @@ class PDC_wizard(models.Model):
     invoice_id = fields.Many2one(
         'account.move', string="Invoice/Bill", tracking=True)
     state = fields.Selection([('draft', 'Draft'), ('registered', 'Registered'), ('returned', 'Returned'),
-                              ('deposited', 'Deposited'), ('bounced', 'Bounced'), ('done', 'PDC Register'), ('cancel', 'Cancelled')], string="State", default='draft', tracking=True)
+                              ('deposited', 'Deposited'), ('bounced', 'Bounced'), ('done', 'Done'), ('cancel', 'Cancelled')], string="State", default='draft', tracking=True)
     deposited_debit = fields.Many2one('account.move.line')
     deposited_credit = fields.Many2one('account.move.line')
 
