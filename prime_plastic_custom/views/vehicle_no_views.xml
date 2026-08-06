@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View -->
+    <record id="view_transport_vehicle_tree" model="ir.ui.view">
+        <field name="name">transport.vehicle.tree</field>
+        <field name="model">transport.vehicle</field>
+        <field name="arch" type="xml">
+            <list string="Vehicle Numbers" editable="top">
+                <field name="vehicle_no" string="Vehicle No."/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_transport_vehicle" model="ir.actions.act_window">
+        <field name="name">Vehicle Numbers</field>
+        <field name="res_model">transport.vehicle</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_transport_vehicle_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add your first vehicle number
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+            id="menu_transport_vehicle"
+            name="Vehicle Numbers"
+            parent="prime_plastic_custom.menu_transport_info"
+            action="action_transport_vehicle"
+            sequence="2"/>
+</odoo>

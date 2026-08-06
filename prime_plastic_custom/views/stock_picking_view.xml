@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_stock_picking_form_transport" model="ir.ui.view">
+        <field name="name">stock.picking.form.transport</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Inject Transport tab after the last existing notebook page -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Transport Info" name="transport_info">
+                    <group>
+                        <group string="Transport Details">
+                            <field name="transport_driver_id"
+                                   string="Driver Name"
+                                   options="{'no_create': False, 'no_quick_create': False}"/>
+                            <field name="transport_vehicle_id"
+                                   string="Vehicle No."
+                                   options="{'no_create': False, 'no_quick_create': False}"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

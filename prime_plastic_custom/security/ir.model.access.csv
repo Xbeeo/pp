@@ -2,3 +2,5 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_color_color,color.color,model_color_color,,1,1,1,1
 access_product_model,product.model,model_product_model,,1,1,1,1
 access_material_material,material.material,model_material_material,,1,1,1,1
+access_transport_vehicle_user,transport.vehicle.user,model_transport_vehicle,,1,1,1,1
+access_sale_driver,sale.driver,model_sale_driver,,1,1,1,1

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_driver_tree" model="ir.ui.view">
+        <field name="name">sale.driver.tree</field>
+        <field name="model">sale.driver</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sale_driver_action" model="ir.actions.act_window">
+        <field name="name">Drivers</field>
+        <field name="res_model">sale.driver</field>
+        <field name="view_mode">list</field>
+    </record>
+    <menuitem
+            id="menu_transport_info"
+            name="Transport Info"
+            parent="sale.menu_sale_config"
+            sequence="99"/>
+
+    <menuitem
+            id="sale_driver_menu"
+            name="Drivers"
+            parent="menu_transport_info"
+            action="sale_driver_action"
+            sequence="1"/>
+</odoo>
