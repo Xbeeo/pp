@@ -19,7 +19,7 @@
     ],
     "data": [
         "data/ir_sequence.xml",
-        "data/account_data.xml",
+        # "data/account_data.xml",
         "data/ir_cron_data.xml",
         "data/mail_templates.xml",
         "security/ir.model.access.csv",
@@ -34,5 +34,5 @@
     "application": True,
     "auto_install": False,
     "installable": True,
-    "post_init_hook": "post_init_hook",
+    # "post_init_hook": "post_init_hook",
 }

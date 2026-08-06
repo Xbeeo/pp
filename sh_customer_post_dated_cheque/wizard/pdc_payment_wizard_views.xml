@@ -67,11 +67,13 @@
                             <field name="name" readonly="1" />
                             <field name="payment_type" invisible="1" widget="radio" />
                             <field name="currency_id" invisible="1" />
+                            <field name="pdc_type" readonly="state != 'draft'" />
                             <field name="partner_id" readonly="state not in ['draft','bounced','returned']" />
                             <field name='company_id' invisible="1"/>
                             <field name="payment_amount" widget="monetary" readonly="state not in ['draft','bounced','returned']" />
                             <field name="reference" readonly="state not in ['draft','bounced','returned']" />
                             <field name="journal_id" options="{'no_create':1,'no_create_edit':1}" readonly="state not in ['draft','bounced','returned']" />
+
                         </group>
                         <group>
                             <field name="payment_date" readonly="state not in ['draft','bounced','returned']" />
@@ -84,7 +86,7 @@
                         </group>
                     </group>
                     <notebook>
-                        <page string = "Invoices">
+                        <page string = "Invoices/Bills">
                             <field name = "account_move_ids" invisible = "1"/>
                             <field name = "invoice_ids" domain="[('id','in',account_move_ids)]" readonly="state not in ['draft','bounced','returned']"/>
                         </page>
@@ -164,7 +166,7 @@
     </record>
     <!-- PDC Menu -->
 
-    <menuitem id="menu_pdc_payment" name="Customer PDC payment" groups="account.group_account_invoice" parent="account.menu_finance" sequence="25" action="sh_pdc_payment_menu_action" />
+    <menuitem id="menu_pdc_payment" name="PDC payment" groups="account.group_account_invoice" parent="account.menu_finance" sequence="25" action="sh_pdc_payment_menu_action" />
 
     <!-- account.move (Journal Entry) -->
 

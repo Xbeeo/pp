@@ -9,6 +9,11 @@ class ResCompany(models.Model):
     pdc_customer = fields.Many2one(
         'account.account', string="PDC Account for customer")
 
+    pdc_vendor = fields.Many2one(
+        'account.account',
+        string="PDC Vendor Account"
+    )
+
     auto_fill_open_invoice = fields.Boolean(string = "Auto Fill open Invoice in PDC on Customer Selection ")
 
     pdc_operation_type = fields.Selection([('cancel', 'Cancel Only'), ('cancel_draft', 'Cancel and Reset to Draft'), ('cancel_delete', 'Cancel and Delete')],
@@ -41,6 +46,9 @@ class ResConfigSettings(models.TransientModel):
 
     pdc_customer = fields.Many2one('account.account', string="PDC Account for customer",
                                    related='company_id.pdc_customer', readonly=False)
+
+    pdc_vendor = fields.Many2one('account.account', string="PDC Account for Vendor",
+                                   related='company_id.pdc_vendor', readonly=False)
     
     auto_fill_open_invoice = fields.Boolean(string = "Auto Fill open Invoice in PDC on Customer Selection",
                                             related = "company_id.auto_fill_open_invoice",readonly=False)
