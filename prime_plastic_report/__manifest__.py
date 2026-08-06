@@ -22,6 +22,9 @@
         'wizard/product_stock_report_wizard.xml',
         'report/action_report.xml',
         'report/product_stock_report_template.xml',
+        'report/gate_pass_report.xml',
+        'report/payment_receipt_report.xml',
+        'report/partner_ledger_report.xml',
 
     ],
 

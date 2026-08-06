@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_partnerledger_inherit" inherit_id="accounting_pdf_reports.report_partnerledger">
+
+        <!-- Font size -->
+        <xpath expr="//div[hasclass('page')]" position="before">
+            <style>
+                table, th, td, span, div, p, strong { font-size: 14px !important; }
+            </style>
+        </xpath>
+
+        <!-- Date from -->
+        <xpath expr="//span[@t-esc=&quot;data['form']['date_from']&quot;]" position="replace">
+            <span t-esc="data['form']['date_from']" t-options='{"widget": "date", "format": "dd MMM yyyy"}'/>
+        </xpath>
+
+        <!-- Date to -->
+        <xpath expr="//span[@t-esc=&quot;data['form']['date_to']&quot;]" position="replace">
+            <span t-esc="data['form']['date_to']" t-options='{"widget": "date", "format": "dd MMM yyyy"}'/>
+        </xpath>
+
+        <!-- Line date -->
+        <xpath expr="//span[@t-esc=&quot;line['date']&quot;]" position="replace">
+            <span t-esc="line['date']" t-options='{"widget": "date", "format": "dd MMM yyyy"}'/>
+        </xpath>
+
+        <!-- Add Description column header -->
+        <xpath expr="//th[text()='Ref']" position="after">
+            <th>Description</th>
+        </xpath>
+
+        <!-- Add Description column data -->
+        <xpath expr="//td[span[@t-esc=&quot;line['displayed_name']&quot;]]" position="after">
+            <td>
+                <t t-if="line['line_type'] == 'payment'">
+                    <div><strong>MOP:</strong> <span t-esc="line['mop']"/></div>
+                    <div><strong>Reference No:</strong> <span t-esc="line['reference_no']"/></div>
+                    <div><strong>Reference Date:</strong> <span t-esc="line['reference_date']" t-options='{"widget": "date", "format": "dd MMM yyyy"}'/></div>
+                </t>
+                <t t-elif="line['line_type'] == 'invoice'">
+                    <table class="table table-sm" style="margin-bottom:0; font-size:10px;">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="line['invoice_lines']" t-as="il">
+                                <td t-esc="il['product_name']"/>
+                                <td t-esc="il['qty']"/>
+                                <td t-esc="il['price']"/>
+                                <td t-esc="il['amount']"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+            </td>
+        </xpath>
+
+    </template>
+</odoo>

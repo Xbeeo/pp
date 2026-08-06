@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paperformat_gate_pass" model="report.paperformat">
+        <field name="name">Gate Pass</field>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_report_gate_pass" model="ir.actions.report">
+        <field name="name">Gate Pass</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">prime_plastic_report.report_gate_pass_template</field>
+        <field name="report_file">prime_plastic_report.report_gate_pass_template</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_gate_pass"/>
+    </record>
+
+    <template id="report_gate_pass_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" style="font-size:13px;">
+
+                    <!-- First Copy -->
+                    <t t-set="copy_label"
+                       t-value="'Vendor Copy' if o.picking_type_code == 'incoming' else 'Customer Copy'"/>
+
+                    <t t-call="prime_plastic_report.gate_pass_copy"/>
+
+                    <div style="border-top:1px dashed #000; text-align:center; margin:10px 0;">
+                        Cut
+                    </div>
+
+                    <!-- Second Copy -->
+                    <t t-set="copy_label" t-value="'Factory Copy'"/>
+
+                    <t t-call="prime_plastic_report.gate_pass_copy"/>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="gate_pass_copy">
+
+        <table style="width:100%; margin-bottom:8px;">
+            <tr>
+                <td style="width:20%;">
+                    <img t-if="o.company_id.logo"
+                         t-att-src="image_data_uri(o.company_id.logo)"
+                         style="max-height:50px;"/>
+                </td>
+
+                <td style="width:60%; text-align:center;">
+                    <h3 style="margin:0;">Gate Pass</h3>
+                </td>
+
+                <td style="width:20%; text-align:right;">
+                    <strong><span t-esc="copy_label"/></strong>
+                    ..........
+                </td>
+            </tr>
+        </table>
+
+        <table style="width:100%; margin-bottom:8px;">
+            <tr>
+
+                <td style="width:60%;">
+                    <t t-if="o.picking_type_code == 'incoming'">
+                        <strong>Vendor Name:</strong>
+                    </t>
+                    <t t-else="">
+                        <strong>Customer Name:</strong>
+                    </t>
+
+                    <span t-esc="o.partner_id.name"/>
+                </td>
+
+                <td style="width:40%; text-align:right;">
+
+                    <strong>Serial #:</strong>
+                    <span t-esc="o.name"/>
+
+                    <br/>
+
+                    <t t-set="scheduled_dt"
+                       t-value="context_timestamp(o.scheduled_date)"/>
+
+                    <strong>Date:</strong>
+                    <span t-out="scheduled_dt.strftime('%d/%m/%Y')"/>
+
+                    <br/>
+
+                    <strong>Time:</strong>
+                    <span t-out="scheduled_dt.strftime('%I:%M:%S %p')"/>
+
+                </td>
+
+            </tr>
+        </table>
+
+        <p style="margin-bottom:4px;">
+            <strong>Order Details</strong>
+        </p>
+
+        <table class="table"
+               style="border:1px solid #000; border-collapse:collapse; width:100%;">
+
+            <thead>
+
+                <tr style="background-color:#eef1f7;">
+                    <th style="border:1px solid #000; padding:4px; width:5%;">Sr#</th>
+                    <th style="border:1px solid #000; padding:4px; width:30%;">Detail</th>
+                    <th style="border:1px solid #000; padding:4px;">Model</th>
+                    <th style="border:1px solid #000; padding:4px;">Color</th>
+                    <th style="border:1px solid #000; padding:4px;">Type</th>
+                    <th style="border:1px solid #000; padding:4px;">Qty</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <t t-foreach="o.move_ids" t-as="move" t-if="move.state != 'cancel'">
+
+                    <tr>
+
+                        <td style="border:1px solid #000; padding:4px;">
+                            <span t-esc="move_index + 1"/>.
+                        </td>
+
+                        <td style="border:1px solid #000; padding:4px;">
+                            <span t-esc="move.product_id.name"/>
+                        </td>
+
+                        <td style="border:1px solid #000; padding:4px; text-align:center;">
+                            <span t-esc="move.product_id.product_model_id.name"/>
+                        </td>
+
+                        <td style="border:1px solid #000; padding:4px; text-align:center;">
+                            <span t-esc="move.product_id.product_color_id.name"/>
+                        </td>
+
+                        <td style="border:1px solid #000; padding:4px; text-align:center;">
+                            <span t-esc="move.product_id.product_material_id.name"/>
+                        </td>
+
+                        <td style="border:1px solid #000; padding:4px; text-align:center;">
+                            <span t-esc="move.quantity"/>
+                        </td>
+
+                    </tr>
+
+                </t>
+
+                <tr t-if="len(o.move_ids) &lt; 2">
+
+                    <td style="border:1px solid #000; padding:4px;">-</td>
+                    <td style="border:1px solid #000; padding:4px;"></td>
+                    <td style="border:1px solid #000; padding:4px;"></td>
+                    <td style="border:1px solid #000; padding:4px;"></td>
+                    <td style="border:1px solid #000; padding:4px;"></td>
+                    <td style="border:1px solid #000; padding:4px;"></td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+        <table style="width:100%; margin-top:30px;">
+
+            <tr>
+
+                <td style="width:33%;">
+                    Driver Name:
+                    <span t-esc="o.transport_driver_id.name"/>
+                </td>
+
+                <td style="width:33%;">
+                    Vehicle no:
+                    <span t-esc="o.transport_vehicle_id.vehicle_no"/>
+                </td>
+
+                <td style="width:33%; text-align:right;">
+                    In-charge Sign: ______________
+                </td>
+
+            </tr>
+
+        </table>
+
+    </template>
+
+</odoo>
