@@ -11,4 +11,6 @@ from . import purchase_order
 from . import vehicle_no
 from . import account_payment
 from . import driver_name
+from . import stock_move
+from . import purchase_order_line
 # from . import account_move

@@ -10,3 +10,4 @@ class ProductTemplateInherit(models.Model):
     product_color_id = fields.Many2one("color.color", string="Product Color")
     product_model_id = fields.Many2one("product.model", string="Product Model")
     product_material_id = fields.Many2one("material.material", string="Product Material")
+    product_standard_weight = fields.Float(string="Product Standard Weight (kg)")

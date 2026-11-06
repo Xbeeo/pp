@@ -11,12 +11,17 @@
                     <page name="product_info" string="Product Info">
                         <group>
                             <group>
-                                <field name="product_color_id" options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}"/>
-                                <field name="product_model_id" options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}" />
-                                <field name="product_material_id" options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}" />
+                                <field name="product_color_id" options="{'no_create_edit': True,'no_open': True}"/>
+                                <field name="product_model_id"
+                                       options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}"/>
+                                <field name="product_material_id"
+                                       options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}"/>
                             </group>
                         </group>
                     </page>
+                </xpath>
+                <xpath expr="//field[@name='barcode']" position="after">
+                    <field name="product_standard_weight"/>
                 </xpath>
             </field>
         </record>

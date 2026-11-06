@@ -8,24 +8,13 @@
 
         <field name="arch" type="xml">
 
-            <xpath expr="//notebook" position="inside">
-
-                <page string="Transport Info">
-
-                    <group>
-
-                        <group string="Transport Details">
-
-                            <field name="transport_driver_id"/>
-
-                            <field name="transport_vehicle_id"/>
-
-                        </group>
-
-                    </group>
-
-                </page>
-
+            <xpath expr="//field[@name='partner_ref']" position="after">
+                <field name="transport_driver_id"/>
+                <field name="transport_vehicle_id"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_uom_id']" position="after">
+                <field name="product_standard_weight" optional="show"/>
+                <field name="receiving_weight" optional="show"/>
             </xpath>
 
         </field>

@@ -23,6 +23,7 @@
         'views/product_model_views.xml',
         'views/material_views.xml',
         'views/product_template_views.xml',
+        'views/product_product_views.xml',
         'views/driver_name_views.xml',
         'views/vehicle_no_views.xml',
         'views/sale_order_view.xml',

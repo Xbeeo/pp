@@ -10,13 +10,11 @@ class PurchaseOrder(models.Model):
     transport_driver_id = fields.Many2one(
         "sale.driver",
         string="Driver Name",
-        required=True,
     )
 
     transport_vehicle_id = fields.Many2one(
         "transport.vehicle",
         string="Vehicle No.",
-        required=True,
     )
 
     def button_confirm(self):
@@ -34,7 +32,7 @@ class PurchaseOrder(models.Model):
                 for move in picking.move_ids:
                     move.quantity = move.product_uom_qty
 
-                picking.button_validate()
+                # picking.button_validate()
 
             # Create Vendor Bill
             bills = order.action_create_invoice()
@@ -50,6 +48,6 @@ class PurchaseOrder(models.Model):
                     bill.invoice_date = fields.Date.context_today(self)
 
                     # Post the bill
-                    bill.action_post()
+                    # bill.action_post()
 
         return res
