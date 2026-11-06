@@ -1,0 +1,30 @@
+<odoo>
+    <record id="view_ledger_wizard" model="ir.ui.view">
+        <field name="name">outsourced.ledger.wizard.form</field>
+        <field name="model">outsourced.ledger.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="partner_id"/>
+                    <field name="product_id"/>
+                </group>
+                <footer>
+                    <button name="action_print" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ledger_wizard" model="ir.actions.act_window">
+        <field name="name">Outsourced Production Item Ledger</field>
+        <field name="res_model">outsourced.ledger.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_outsourced_ledger" name="Outsourced Production Item Ledger"
+              parent="stock.menu_warehouse_report" action="action_ledger_wizard" sequence="90"/>
+</odoo>

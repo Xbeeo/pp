@@ -59,6 +59,20 @@
                 </t>
             </td>
         </xpath>
+        <xpath expr="//tr[td/strong[@t-esc='o.ref']]/td[@colspan='4']"
+               position="attributes">
+            <attribute name="colspan">2</attribute>
+        </xpath>
+
+        <!-- Remove JRNL, Account, Ref headers -->
+        <xpath expr="//th[normalize-space()='JRNL']" position="replace"/>
+        <xpath expr="//th[normalize-space()='Account']" position="replace"/>
+        <xpath expr="//th[normalize-space()='Ref']" position="replace"/>
+
+        <!-- Remove JRNL, Account, Ref column values -->
+        <xpath expr="//td[span[@t-esc=&quot;line['code']&quot;]]" position="replace"/>
+        <xpath expr="//td[span[@t-esc=&quot;line['a_name']&quot;]]" position="replace"/>
+        <xpath expr="//td[span[@t-esc=&quot;line['displayed_name']&quot;]]" position="replace"/>
 
     </template>
 </odoo>

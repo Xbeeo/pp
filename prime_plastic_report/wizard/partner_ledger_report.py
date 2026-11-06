@@ -1,8 +1,9 @@
-from odoo import models
+from odoo import models, fields
 
 
 class ReportPartnerLedgerInherit(models.AbstractModel):
     _inherit = 'report.accounting_pdf_reports.report_partnerledger'
+
 
     def _lines(self, data, partner):
         full_account = super()._lines(data, partner)
@@ -32,3 +33,21 @@ class ReportPartnerLedgerInherit(models.AbstractModel):
                 ]
 
         return full_account
+
+class AccountPartnerLedger(models.TransientModel):
+    _inherit = "account.report.partner.ledger"
+
+    partner_type = fields.Selection(
+        [('customer', 'Customer'), ('supplier', 'Vendor')],
+        default=lambda self: self.env.context.get('partner_type'))
+
+    def _get_report_data(self, data):
+        data = super()._get_report_data(data)
+        if self.partner_type:
+            rank = 'customer_rank' if self.partner_type == 'customer' else 'supplier_rank'
+            partners = self.env['res.partner'].search([(rank, '>', 0)])
+            selected = data['form'].get('partner_ids')
+            if selected:
+                partners = partners.filtered(lambda p: p.id in selected)
+            data['form']['partner_ids'] = partners.ids or [0]
+        return data

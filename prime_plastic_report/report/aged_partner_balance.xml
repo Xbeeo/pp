@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_agedpartnerbalance_inherit"
+              inherit_id="accounting_pdf_reports.report_agedpartnerbalance">
+
+        <xpath expr="//tr[@t-foreach='get_partner_lines']"
+               position="attributes">
+            <attribute name="t-foreach">
+                sorted(get_partner_lines, key=lambda p: p['total'], reverse=True)
+            </attribute>
+        </xpath>
+
+    </template>
+</odoo>

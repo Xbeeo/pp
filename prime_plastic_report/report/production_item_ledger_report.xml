@@ -1,0 +1,133 @@
+<odoo>
+    <record id="paperformat_ledger_landscape" model="report.paperformat">
+        <field name="name">Ledger Landscape</field>
+        <field name="format">A4</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">15</field>
+    </record>
+
+    <record id="action_ledger_report" model="ir.actions.report">
+        <field name="name">Outsourced Production Item Ledger</field>
+        <field name="model">outsourced.ledger.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">prime_plastic_report.report_ledger</field>
+        <field name="paperformat_id" ref="paperformat_ledger_landscape"/>
+    </record>
+
+    <template id="report_ledger">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <h3 style="text-align:center">Outsourced Production Item Ledger</h3>
+                        <table style="width:100%;margin-bottom:10px;">
+                            <tr>
+                                <td style="width:34%;vertical-align:top;">
+                                    <b>Date From:</b>
+                                    <span t-esc="o.date_from.strftime('%d-%b-%Y')"/>
+                                    <br/>
+                                    <b>Date To:</b>
+                                    <span t-esc="o.date_to.strftime('%d-%b-%Y')"/>
+                                </td>
+                                <td style="width:33%;vertical-align:top;">
+                                    <b>Partner:</b>
+                                    <span t-esc="o.partner_id.name or 'All'"/>
+                                    <br/>
+                                    <b>Product:</b>
+                                    <span t-esc="o.product_id.display_name or 'All'"/>
+                                </td>
+                                <td style="width:33%;vertical-align:top;">
+                                    <b>Printed On:</b>
+                                    <span t-esc="o._get_printed_on()"/>
+                                    <br/>
+                                    <b>Printed By:</b>
+                                    <span t-esc="user.name"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <t t-set="data" t-value="o._get_lines()"/>
+                        <t t-set="th" t-value="'background-color:#555555 !important;color:#ffffff !important;'"/>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th t-att-style="th">Sr#</th>
+                                    <th t-att-style="th">Date</th>
+                                    <th t-att-style="th">Description</th>
+                                    <th t-att-style="th">Color</th>
+                                    <th t-att-style="th">Model</th>
+                                    <th t-att-style="th" class="text-end">Weight Out Qty</th>
+                                    <th t-att-style="th" class="text-end">Pcs In Qty</th>
+                                    <th t-att-style="th" class="text-end">Stock Rate</th>
+                                    <th t-att-style="th" class="text-end">Stock Weight</th>
+                                    <th t-att-style="th" class="text-end">Production Weight In</th>
+                                    <th t-att-style="th" class="text-end">Pre Weight</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="font-weight:bold;background-color:#f2f2f2;">
+                                    <td colspan="10" class="text-end">Opening Balance</td>
+                                    <td class="text-end">
+                                        <t t-esc="data[1]['opening']"/>
+                                    </td>
+                                </tr>
+                                <tr t-foreach="data[0]" t-as="l">
+                                    <td>
+                                        <t t-esc="l['sr']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="l['date']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="l['desc']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="l['color']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="l['model']"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="l['weight_out']"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="l['pcs_in']"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="l['rate']"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="l['stock_weight']"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="l['prod_weight_in']"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="l['pre_weight']"/>
+                                    </td>
+                                </tr>
+                                <tr style="font-weight:bold;background-color:#dddddd;">
+                                    <td colspan="5" class="text-end">Total</td>
+                                    <td class="text-end">
+                                        <t t-esc="data[1]['weight_out']"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="data[1]['pcs_in']"/>
+                                    </td>
+                                    <td/>
+                                    <td/>
+                                    <td class="text-end">
+                                        <t t-esc="data[1]['prod_weight_in']"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="data[1]['pre_weight']"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
